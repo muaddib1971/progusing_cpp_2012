@@ -21,3 +21,4 @@ class infested_area
         void path_distance(const int&);
         void zombie_strength(const double &);
 };
+
