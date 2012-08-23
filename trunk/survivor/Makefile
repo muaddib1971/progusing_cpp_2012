@@ -2,7 +2,7 @@ LFLAGS=-lboost_system -lboost_random
 STDFLAGS=-ansi -pedantic -Wall
 CFLAGS=$(STDFLAGS)
 OBJECTS=main.o survivor.o trained_survivor.o weak_survivor.o infested_area.o \
-	simulator.o hospital.o pub.o
+	simulator.o hospital.o pub.o tokenizer.o
 
 all:$(OBJECTS)
 	g++ $(LFLAGS) $(OBJECTS) -o survivalrate
@@ -34,6 +34,9 @@ hospital.o:hospital.cpp hospital.h infested_area.h
 
 pub.o:pub.cpp pub.h infested_area.h
 	g++ $(CFLAGS) -c pub.cpp
+
+tokenizer.o:tokenizer.cpp tokenizer.h 
+	g++ $(CFLAGS) -c tokenizer.cpp
 
 clean:
 	rm -f *.o survivalrate
