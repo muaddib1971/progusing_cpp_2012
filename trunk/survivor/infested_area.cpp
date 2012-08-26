@@ -1,7 +1,9 @@
 #include "infested_area.h"
-const int & infested_area::location() const
+
+infested_area::infested_area(int & popsize, int & pathdist, 
+        double & zstren) :
+   _popsize(popsize), _pathdistance(pathdist), _zombstr(zstren) 
 {
-    return _location;
 }
 
 const int & infested_area::path_distance() const
@@ -12,11 +14,6 @@ const int & infested_area::path_distance() const
 const double & infested_area::zombie_strength() const
 {
     return _zombstr;
-}
-
-void infested_area::location(const int& loc)
-{
-    _location = loc;
 }
 
 void infested_area::path_distance(const int& dist)

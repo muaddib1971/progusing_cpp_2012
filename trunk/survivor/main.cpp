@@ -1,4 +1,5 @@
 #include "main.h"
+#if 0
 int main(int argc, char** argv)
 {
     survivor * surv = process_options(argc, argv);
@@ -12,7 +13,7 @@ int main(int argc, char** argv)
     delete surv;
     return EXIT_SUCCESS;
 }
-
+#endif
 survivor * process_options(int argc, char** argv)
 {
     survivor * surv = NULL;

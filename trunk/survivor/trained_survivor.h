@@ -6,6 +6,6 @@ class trained_survivor : public survivor
     public:
         int stamina() const;
         double stress() const;
-        char identifier() const;
+        static const char IDENTIFIER='T';
 };
 #endif

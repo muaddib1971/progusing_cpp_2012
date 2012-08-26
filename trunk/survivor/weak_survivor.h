@@ -4,7 +4,8 @@ class weak_survivor : public survivor
     public:
         double ability() const;
         double stress() const;
-        char identifier() const;
+
+        static const char IDENTIFIER = 'W';
 
     private:
         static double const STRESS_FACTOR;
