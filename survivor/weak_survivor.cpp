@@ -11,7 +11,3 @@ double weak_survivor::stress() const
     return _stress / STRESS_FACTOR;
 }
 
-char weak_survivor::identifier() const
-{
-    return 'W';
-}

@@ -1,10 +1,11 @@
 #include "hospital.h"
 
-char hospital::identifier()
+hospital::hospital(int & pop, int & dist, double & zstr)
+    : infested_area(pop, dist, zstr)
 {
-    return 'H';
 }
 
+#if 0
 void hospital::increment()
 {
     (*this)++;
@@ -27,3 +28,4 @@ hospital hospital::operator++(int)
     (*this)++;
     return hosp;
 }
+#endif

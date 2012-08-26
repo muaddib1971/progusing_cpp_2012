@@ -7,6 +7,13 @@ const double survivor::PHI=0.25;
 const double survivor::LOCFAC=2500.0;
 const double survivor::STRESSFAC=4.0;
 
+const double survivor::MIN_ABILITY = 0;
+const double survivor::MAX_ABILITY = 1;
+const double survivor::MIN_STRESS = 0;
+const double survivor::MAX_STRESS = 1;
+const double survivor::MIN_LUCK = -0.15;
+const double survivor::MAX_LUCK = 0.15;
+
 survivor::survivor(int stamina, int location, double ability, 
     double stress, double luck, string name, int health, int wpower) 
     : _stamina(stamina), _location(location),
@@ -36,11 +43,6 @@ int survivor::stamina() const
 double survivor::ability() const
 {
     return _ability;
-}
-        
-char survivor::identifier() const
-{
-    return 'S';
 }
         
 double survivor::stress() const

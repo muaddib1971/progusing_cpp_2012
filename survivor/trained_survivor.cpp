@@ -10,7 +10,3 @@ double trained_survivor::stress() const
     return _stress * 0.9;
 }
 
-char trained_survivor::identifier() const
-{
-    return 'T';
-}

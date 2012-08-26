@@ -2,8 +2,11 @@
 class hospital : public infested_area
 {
     public:
-        char identifier();
+        hospital(int&, int&, double&);
+        static const char IDENTIFIER='H';
+#if 0
         void increment();
         hospital operator++();
         hospital operator++(int);
+#endif
 };
