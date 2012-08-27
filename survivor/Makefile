@@ -1,7 +1,7 @@
-LFLAGS=-lboost_system -lboost_random
+LFLAGS=-lboost_system -lboost_random -lboost_filesystem
 STDFLAGS=-ansi -pedantic -Wall
 CFLAGS=$(STDFLAGS)
-OBJECTS=main.o survivor.o trained_survivor.o weak_survivor.o infested_area.o \
+OBJECTS=survivor.o trained_survivor.o weak_survivor.o infested_area.o \
 	simulator.o hospital.o pub.o tokenizer.o os_error.o
 
 all:$(OBJECTS)

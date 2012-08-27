@@ -271,13 +271,16 @@ survivor * simulator::parseSurvivor(string line)
     switch (sType)
     {
         case trained_survivor::IDENTIFIER:
-            surv = new trained_survivor();
+            surv = new trained_survivor(name, health, power, stamina, 
+                       ability, stress, luck);
             break;
         case survivor::IDENTIFIER:
-            surv = new survivor();
+            surv = new survivor(name, health, power, stamina, 
+                       ability, stress, luck);
             break;
         case weak_survivor::IDENTIFIER:
-            surv = new weak_survivor();
+            surv = new weak_survivor(name, health, power, stamina, 
+                       ability, stress, luck);
             break;
         default:
             cerr << "Error: " << sType << 

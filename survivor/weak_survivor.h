@@ -7,6 +7,8 @@ class weak_survivor : public survivor
 
         static const char IDENTIFIER = 'W';
 
+        weak_survivor( string, int, int, int , double , double , bool );
+
     private:
         static double const STRESS_FACTOR;
 };

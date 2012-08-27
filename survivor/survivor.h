@@ -42,7 +42,7 @@ class survivor
         
         static const char IDENTIFIER='S';
 
-        survivor(int, int, double, double, double, string, int, int);
+        survivor(string, int , int , int, double , double , bool);
         double calc_survival() const;
 
         virtual int stamina() const;
