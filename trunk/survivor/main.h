@@ -6,10 +6,7 @@
 #include <iomanip>
 #include "survivor.h"
 #include <boost/lexical_cast.hpp>
-#include <boost/random/random_device.hpp>
-#include <boost/random/discrete_distribution.hpp>
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/random/uniform_real_distribution.hpp>
+
 
 survivor * process_options(int argc, char** argv);
 double gen_luck();

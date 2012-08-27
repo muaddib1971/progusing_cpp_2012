@@ -1,8 +1,8 @@
-LFLAGS=-lboost_system -lboost_random -lboost_filesystem
+LFLAGS=-lboost_system -lboost_random 
 STDFLAGS=-ansi -pedantic -Wall
 CFLAGS=$(STDFLAGS)
 OBJECTS=survivor.o trained_survivor.o weak_survivor.o infested_area.o \
-	simulator.o hospital.o pub.o tokenizer.o os_error.o
+	simulator.o hospital.o pub.o tokenizer.o os_error.o parser.o
 
 all:$(OBJECTS)
 	g++ $(LFLAGS) $(OBJECTS) -o survivalrate
@@ -40,6 +40,9 @@ tokenizer.o:tokenizer.cpp tokenizer.h
 
 os_error.o:os_error.cpp os_error.h
 	g++ $(CFLAGS) -c os_error.cpp
+
+parser.o: parser.h parser.cpp 
+	g++ $(CFLAGS) -c parser.cpp
 
 clean:
 	rm -f *.o survivalrate
