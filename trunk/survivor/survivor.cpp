@@ -14,9 +14,9 @@ const double survivor::MAX_STRESS = 1;
 const double survivor::MIN_LUCK = -0.15;
 const double survivor::MAX_LUCK = 0.15;
 
-survivor::survivor(int stamina, int location, double ability, 
-    double stress, double luck, string name, int health, int wpower) 
-    : _stamina(stamina), _location(location),
+survivor::survivor( string name, int health, int wpower, int stamina, 
+	double ability, double stress, bool luck) 
+    : _stamina(stamina), 
     _ability(ability), _stress(stress), _luck(luck), _name(name), 
     _health(health), _wpower(wpower)
 {
@@ -26,12 +26,14 @@ survivor::survivor(int stamina, int location, double ability,
 double survivor::calc_survival() const
 {
     double survival;
+#if 0
     survival = (ALPHA * stamina()) + (BETA - _location/LOCFAC) + 
         (GAMMA * ability()) + (PHI - (stress()/STRESSFAC)) + _luck;
     if (survival > 1.0)
     {
         survival=1.0;
     }
+#endif
     return survival;
 }
 
