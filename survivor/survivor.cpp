@@ -22,7 +22,7 @@ survivor::survivor( string name, int health, int wpower, int stamina,
 {
 
 }
-
+#if 0
 double survivor::calc_survival() const
 {
     double survival;
@@ -36,6 +36,7 @@ double survivor::calc_survival() const
 #endif
     return survival;
 }
+#endif
 
 int survivor::stamina() const
 {
@@ -50,4 +51,27 @@ double survivor::ability() const
 double survivor::stress() const
 {
     return _stress;
+}
+
+double survivor::gen_luck()
+{
+    random::random_device generator;
+    random::uniform_real_distribution<> range(MIN_LUCK, MAX_LUCK);
+    double luck = range(generator);
+#ifdef DEBUG
+    cerr << luck << endl;
+#endif
+    return luck;
+}
+
+int survivor::stepsAdvanced()
+{
+    random::random_device generator;
+    random::uniform_real_distribution<> range(MIN_STEPS, MAX_STEPS);
+    return range(generator) * (updatedStamina()/MAX_STAMINA) + 1;
+}
+
+int survivor::updatedStamina()
+{
+    return _stamina * _health / MAX_HEALTH;
 }

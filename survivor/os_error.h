@@ -5,7 +5,8 @@
 
 using namespace boost::system;
 using namespace std;
-
+#ifndef OS_ERROR_H
+#define OS_ERROR_H
 class os_error
 {
     string err_str;
@@ -15,3 +16,4 @@ class os_error
         os_error(string);
         void print_error(ostream &);
 };
+#endif

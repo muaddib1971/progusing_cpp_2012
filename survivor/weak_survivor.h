@@ -1,4 +1,6 @@
 #include "survivor.h"
+#ifndef WEAK_SURVIVOR_H
+#define WEAK_SURVIVOR_H
 class weak_survivor : public survivor
 {
     public:
@@ -12,3 +14,4 @@ class weak_survivor : public survivor
     private:
         static double const STRESS_FACTOR;
 };
+#endif
