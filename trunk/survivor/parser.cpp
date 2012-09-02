@@ -24,6 +24,8 @@ bool parser::parseFile(string filename, simulator & sim)
     unsigned num_survivors;
     char c_line[BUFSIZ];
     string line;
+    infested_area * area;
+    vector<survivor*>survivors;
 
     /* get the number of survivors */
     in.getline(c_line, BUFSIZ);
@@ -46,18 +48,35 @@ bool parser::parseFile(string filename, simulator & sim)
         in.getline(c_line, BUFSIZ);
         line = c_line;
 
+        area = parseArea(line);
+        if(!area)
+        {
+            in.close();
+            return false;
+        }
+
         while(in.good())
         {
             survivor * surv=NULL;
             in.getline(c_line, BUFSIZ);
             line = c_line;
+            if(!in.good())
+            {
+                break;
+            }
             surv = parseSurvivor(line);
-            
+            if(!surv)
+            {
+                in.close();
+                return false;
+            }
+            survivors.push_back(surv);
         }
-        if(in.bad() || in.fail())
+        if(!in.eof())
         {
             os_error error("Error reading from file");
             error.print_error(cerr);
+            in.close();
             return false;
         }
     }
@@ -65,9 +84,15 @@ bool parser::parseFile(string filename, simulator & sim)
     {
         os_error error("Error reading from file");
         error.print_error(cerr);
+        if(in.is_open())
+        {
+            in.close();
+        }
         return false;
     }
     in.close();
+    sim.survivors(survivors);
+    sim.area(area);
     return true;
 }
 
@@ -95,7 +120,7 @@ infested_area * parser::parseArea(string line)
                     {
                         cerr << "Error: the area type is not valid."
                             << endl;
-                        return false;
+                        return NULL;
                     }
                     break;
                 case POPULATION:
@@ -110,22 +135,23 @@ infested_area * parser::parseArea(string line)
                 default:
                     cerr << "Error: area data has an invalid number "
                         << "of tokens." << endl;
-                    return false;
+                    return NULL;
             }
         }
         catch(bad_lexical_cast &)
         {
             cerr << "Error: the population data is invalid." << endl;
-            return false;
+            return NULL;
         }
-        if(aType == PUB)
-        {
-            area = new pub(popsize, distance, strength);
-        }
-        else
-        {
-            area = new hospital(popsize, distance, strength);
-        }
+       
+    }
+    if(aType == PUB)
+    {
+        area = new pub(popsize, distance, strength);
+    }
+    else 
+    {
+        area = new hospital(popsize, distance, strength);
     }
     return area;
 }

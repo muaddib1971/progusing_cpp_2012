@@ -13,30 +13,18 @@ const double survivor::MIN_STRESS = 0;
 const double survivor::MAX_STRESS = 1;
 const double survivor::MIN_LUCK = -0.15;
 const double survivor::MAX_LUCK = 0.15;
+const double survivor::MIN_ATTACK=0.0;
+const double survivor::MAX_ATTACK = 1.0;
+const double survivor::ATTACK_BONUS=0.3;
 
 survivor::survivor( string name, int health, int wpower, int stamina, 
 	double ability, double stress, bool luck) 
     : _stamina(stamina), 
     _ability(ability), _stress(stress), _luck(luck), _name(name), 
-    _health(health), _wpower(wpower)
+    _health(health), _wpower(wpower), _location(0)
 {
 
 }
-#if 0
-double survivor::calc_survival() const
-{
-    double survival;
-#if 0
-    survival = (ALPHA * stamina()) + (BETA - _location/LOCFAC) + 
-        (GAMMA * ability()) + (PHI - (stress()/STRESSFAC)) + _luck;
-    if (survival > 1.0)
-    {
-        survival=1.0;
-    }
-#endif
-    return survival;
-}
-#endif
 
 int survivor::stamina() const
 {
@@ -53,6 +41,16 @@ double survivor::stress() const
     return _stress;
 }
 
+int survivor::location() const
+{
+    return _location;
+}
+
+int survivor::power() const
+{
+    return _wpower;
+}
+
 double survivor::gen_luck()
 {
     random::random_device generator;
@@ -66,12 +64,37 @@ double survivor::gen_luck()
 
 int survivor::stepsAdvanced()
 {
-    random::random_device generator;
-    random::uniform_real_distribution<> range(MIN_STEPS, MAX_STEPS);
-    return range(generator) * (updatedStamina()/MAX_STAMINA) + 1;
+    random_device rand_generator;
+    uniform_real_distribution<> range(MIN_STEPS, MAX_STEPS);
+    return range(rand_generator) * ((double)(updatedStamina())/MAX_STAMINA)
+        + 1;
 }
 
 int survivor::updatedStamina()
 {
-    return _stamina * _health / MAX_HEALTH;
+    return _stamina * (double)_health / MAX_HEALTH;
+}
+
+survivor survivor::operator+=(int num)
+{
+    this->_location += num;
+    return *this;
+}
+
+int survivor::health() const
+{
+    return _health;
+}
+
+void survivor::health(const int & newhealth)
+{
+    _health = newhealth;
+}
+
+double survivor::attack()
+{
+    random_device gen;
+    uniform_real_distribution<> dist(MIN_ATTACK, MAX_ATTACK);
+    double rnd_el = dist(gen);
+    return rnd_el * (power() + ATTACK_BONUS * ability());
 }
