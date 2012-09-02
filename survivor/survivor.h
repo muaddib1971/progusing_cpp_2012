@@ -8,8 +8,9 @@
 #include <string>
 using namespace std;
 using namespace boost;
+using namespace boost::random;
 class survivor
-{
+{ 
     protected:
         int _stamina;
         double _ability;
@@ -21,6 +22,8 @@ class survivor
         int _health;
         int _wpower;
 
+    protected:
+        int _location;
 
 
     public:
@@ -47,20 +50,25 @@ class survivor
         static const double MAX_STRESS;
         static const double MIN_LUCK;
         static const double MAX_LUCK;
+        static const double MIN_ATTACK;
+        static const double MAX_ATTACK;
+        static const double ATTACK_BONUS;
         
         static const char IDENTIFIER='S';
 
         survivor(string, int , int , int, double , double , bool);
-#if 0
-        double calc_survival() const;
-#endif
+
         double gen_luck();
         int stepsAdvanced();
         int updatedStamina();
-        double encounterRate();
         double attack();
         virtual int stamina() const;
+        virtual int location() const;
         virtual double ability() const;
         virtual double stress() const;
+        virtual int power() const;
+        virtual int health() const;
+        virtual void health(const int&);
+        survivor operator+=(int);
 };
 #endif

@@ -24,6 +24,7 @@ class parser
         survivor * parseSurvivor(string line);
         bool parseFile(string , simulator & );
 
+
         static const string TOKENS;
 
         enum survivor_type

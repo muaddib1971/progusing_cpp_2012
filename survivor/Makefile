@@ -1,5 +1,5 @@
 LFLAGS=-lboost_system -lboost_random 
-STDFLAGS=-ansi -pedantic -Wall
+STDFLAGS=-ansi -pedantic -Wall -gstabs
 CFLAGS=$(STDFLAGS)
 OBJECTS=survivor.o trained_survivor.o weak_survivor.o infested_area.o \
 	simulator.o hospital.o pub.o tokenizer.o os_error.o parser.o
@@ -26,7 +26,8 @@ weak_survivor.o:weak_survivor.cpp weak_survivor.h survivor.h
 infested_area.o:infested_area.cpp infested_area.h
 	g++ $(CFLAGS) -c infested_area.cpp
 
-simulator.o:simulator.cpp simulator.h survivor.h os_error.h
+simulator.o:simulator.cpp simulator.h survivor.h os_error.h weak_survivor.h \
+	trained_survivor.h infested_area.h pub.h hospital.h parser.h
 	g++ $(CFLAGS) -c simulator.cpp
 
 hospital.o:hospital.cpp hospital.h infested_area.h
@@ -41,7 +42,8 @@ tokenizer.o:tokenizer.cpp tokenizer.h
 os_error.o:os_error.cpp os_error.h
 	g++ $(CFLAGS) -c os_error.cpp
 
-parser.o: parser.h parser.cpp 
+parser.o: parser.h parser.cpp os_error.h weak_survivor.h trained_survivor.h \
+	tokenizer.h infested_area.h pub.h hospital.h simulator.h
 	g++ $(CFLAGS) -c parser.cpp
 
 clean:
