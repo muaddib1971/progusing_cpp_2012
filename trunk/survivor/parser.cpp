@@ -1,5 +1,5 @@
 #include "parser.h"
-
+/* the characters that we will tokenize each line on */
 const string parser::TOKENS=" ";
 
 /**
@@ -55,23 +55,35 @@ bool parser::parseFile(string filename, simulator & sim)
             return false;
         }
 
+        /* get each survivor from the file */
         while(in.good())
         {
             survivor * surv=NULL;
+            /* get the line of input */
             in.getline(c_line, BUFSIZ);
             line = c_line;
             if(!in.good())
             {
+                /* we can do no more processing as the stream is no
+                 * longer good
+                 */
                 break;
             }
+            /* parse the line */
             surv = parseSurvivor(line);
+            /* if there is a problem we clean up and exit */
             if(!surv)
             {
                 in.close();
                 return false;
             }
+            /* add the survivor to the collection */
             survivors.push_back(surv);
         }
+        /* if we get here and we are not at the end of the file, 
+         * some other error has occured, normally an operating system
+         * error
+         */
         if(!in.eof())
         {
             os_error error("Error reading from file");
@@ -82,6 +94,9 @@ bool parser::parseFile(string filename, simulator & sim)
     }
     else
     {
+        /* if we failed to open the file, display an error from the 
+         * operating system explaining what went wrong
+         */
         os_error error("Error reading from file");
         error.print_error(cerr);
         if(in.is_open())
@@ -91,12 +106,17 @@ bool parser::parseFile(string filename, simulator & sim)
         return false;
     }
     in.close();
+    /* return the data to the simulator class */
     sim.survivors(survivors);
     sim.area(area);
+    /* everything went well */
     return true;
 }
 
-
+/**
+ * tries to compose an area based on a line passed from the input file.
+ * if it fails, it will return NULL
+ **/
 infested_area * parser::parseArea(string line)
 {
     enum area_type aType;
@@ -105,9 +125,12 @@ infested_area * parser::parseArea(string line)
     infested_area * area;
     unsigned tok_count = 0;
 
+    /* create the tokenizer */
     tokenizer tok(line, parser::TOKENS);
+    /* while there are still more elements to process */
     while(tok.has_next())
     {
+        /* get the next token */
         tok_count++;
         string item = tok.next_token();
         try
