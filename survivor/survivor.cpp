@@ -56,9 +56,6 @@ double survivor::gen_luck()
     random::random_device generator;
     random::uniform_real_distribution<> range(MIN_LUCK, MAX_LUCK);
     double luck = range(generator);
-#ifdef DEBUG
-    cerr << luck << endl;
-#endif
     return luck;
 }
 

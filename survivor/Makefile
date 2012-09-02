@@ -11,9 +11,6 @@ debug:CFLAGS=$(STDFLAGS) -DDEBUG
 debug:clean $(OBJECTS)
 	g++ $(LFLAGS) $(OBJECTS) -o survivalrate
 
-main.o:main.cpp main.h survivor.h
-	g++ $(CFLAGS) -c main.cpp
-
 survivor.o:survivor.cpp survivor.h
 	g++ $(CFLAGS) -c survivor.cpp
 

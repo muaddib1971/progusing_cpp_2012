@@ -11,6 +11,8 @@ tokenizer::tokenizer(string line, string delims) : main_string(line),
                                                    delimiters(delims),
                                                    last_loc(0)
 {
+    //lastloc is the location of the last delimiter. So, we set it to 0
+    //to begin with.
 }
 
 /**
@@ -50,9 +52,9 @@ string tokenizer::next_token()
     //returned
     string::size_type num_bytes = 
         main_string.copy(word, next_loc - loc, loc);
+    //zero terminate the string
     word[num_bytes]=0;
     string ret_val(word);
-    //free memory that was allocated
     //store the location of the last delimiter encountered
     last_loc = next_loc;
     //return the token
