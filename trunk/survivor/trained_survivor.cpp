@@ -11,7 +11,7 @@ trained_survivor::trained_survivor( string name, int health, int wpower,
 }
 
 /**
- * overload the stamina from the survivor class
+ * override the stamina from the survivor class
  **/
 int trained_survivor::stamina() const
 {
@@ -19,7 +19,7 @@ int trained_survivor::stamina() const
 }
 
 /**
- * overload stress from the survivor class 
+ * override stress from the survivor class 
  **/
 double trained_survivor::stress() const
 {

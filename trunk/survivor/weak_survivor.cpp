@@ -14,7 +14,7 @@ weak_survivor::weak_survivor( string name, int health, int wpower,
 
 
 /**
- * overload ability() from the survivor class
+ * override ability() from the survivor class
  **/
 double weak_survivor::ability() const
 {
@@ -22,7 +22,7 @@ double weak_survivor::ability() const
 }
 
 /**
- * overload stress from the parent class
+ * override stress from the parent class
  **/
 double weak_survivor::stress() const
 {
