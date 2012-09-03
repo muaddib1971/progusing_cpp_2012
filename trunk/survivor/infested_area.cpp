@@ -61,11 +61,16 @@ double infested_area::encounterRate(int & steps) const
 }
 
 /**
- * getter functions
+ * getter and setter functions
  **/
 const int & infested_area::path_distance() const
 {
     return _pathdistance;
+}
+
+const int & infested_area::population() const
+{
+    return _popsize;
 }
 
 const double & infested_area::zombie_strength() const
@@ -82,3 +87,5 @@ void infested_area::zombie_strength(const double & strength)
 {
     _zombstr = strength;
 }
+
+

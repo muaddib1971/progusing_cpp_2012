@@ -27,28 +27,7 @@ class parser
 
         static const string TOKENS;
 
-        enum survivor_type
-        {
-            TRAINED=trained_survivor::IDENTIFIER,
-            NORMAL=survivor::IDENTIFIER, 
-            WEAK=weak_survivor::IDENTIFIER
-        };
 
-        enum area_type
-        {
-            PUB=pub::IDENTIFIER, HOSPITAL=hospital::IDENTIFIER
-        };
-
-        enum area_token
-        {
-            AREA_TYPE=1, POPULATION, DISTANCE, STRENGTH
-        };
-
-        enum survivor_token
-        {
-            SURVIVOR_TYPE=1, NAME, HEALTH, POWER, STAMINA, ABILITY,
-            STRESS, LUCK
-        };
 
 };
 #endif

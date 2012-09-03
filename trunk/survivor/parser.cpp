@@ -119,7 +119,7 @@ bool parser::parseFile(string filename, simulator & sim)
  **/
 infested_area * parser::parseArea(string line)
 {
-    enum area_type aType;
+    enum simulator::area_type aType;
     int popsize, distance;
     double strength;
     infested_area * area;
@@ -137,22 +137,23 @@ infested_area * parser::parseArea(string line)
         {
             switch(tok_count)
             {
-                case AREA_TYPE:
-                    aType = (enum area_type)item[0];
-                    if(aType != PUB && aType != HOSPITAL)
+                case simulator::AREA_TYPE:
+                    aType = (enum simulator::area_type)item[0];
+                    if(aType != simulator::PUB && 
+                        aType != simulator::HOSPITAL)
                     {
                         cerr << "Error: the area type is not valid."
                             << endl;
                         return NULL;
                     }
                     break;
-                case POPULATION:
+                case simulator::POPULATION:
                     popsize = lexical_cast<int>(item);
                     break;
-                case DISTANCE:
+                case simulator::DISTANCE:
                     distance = lexical_cast<int>(item);
                     break;
-                case STRENGTH:
+                case simulator::STRENGTH:
                     strength = lexical_cast<double>(item);
                     break;
                 default:
@@ -168,7 +169,7 @@ infested_area * parser::parseArea(string line)
         }
        
     }
-    if(aType == PUB)
+    if(aType == simulator::PUB)
     {
         area = new pub(popsize, distance, strength);
     }
@@ -183,7 +184,7 @@ survivor * parser::parseSurvivor(string line)
 {
     tokenizer tok(line, TOKENS);
     unsigned tok_count = 0;
-    enum survivor_type sType;
+    enum simulator::survivor_type sType;
     string name;
     int health, power, stamina;
     double ability, stress;
@@ -204,18 +205,20 @@ survivor * parser::parseSurvivor(string line)
         {
             switch(tok_count)
             {
-                case SURVIVOR_TYPE:
-                    sType=(enum survivor_type)token[0];
-                    if(sType != NORMAL && sType != WEAK && sType != TRAINED)
+                case simulator::SURVIVOR_TYPE:
+                    sType=(enum simulator::survivor_type)token[0];
+                    if(sType != simulator::NORMAL 
+                        && sType != simulator::WEAK 
+                        && sType != simulator::TRAINED)
                     {
                         cerr << "Error: survivor is not of a valid type." <<
                             endl;
                     }
                     break;
-                case NAME:
+                case simulator::NAME:
                     name = token;
                     break;
-                case HEALTH:
+                case simulator::HEALTH:
                     health = lexical_cast<int>(token);
                     if(health < survivor::MIN_HEALTH || 
                         health > survivor::MAX_HEALTH)
@@ -225,7 +228,7 @@ survivor * parser::parseSurvivor(string line)
                         return NULL;
                     }
                     break;
-                case POWER:
+                case simulator::POWER:
                     power = lexical_cast<int>(token);
                     if(power < survivor::MIN_POWER ||
                         power > survivor::MAX_POWER)
@@ -235,7 +238,7 @@ survivor * parser::parseSurvivor(string line)
                             return NULL;
                     }
                     break;
-                case STAMINA:
+                case simulator::STAMINA:
                     stamina = lexical_cast<double>(token);
                     if(stamina < survivor::MIN_STAMINA || 
                         stamina > survivor::MAX_STAMINA)
@@ -245,7 +248,7 @@ survivor * parser::parseSurvivor(string line)
                         return NULL;
                     }
                     break;
-                case ABILITY:
+                case simulator::ABILITY:
                     ability = lexical_cast<double>(token);
                     if(ability < survivor::MIN_ABILITY ||
                         ability > survivor::MAX_ABILITY)
@@ -255,7 +258,7 @@ survivor * parser::parseSurvivor(string line)
                         return NULL;
                     }
                     break;
-                case STRESS:
+                case simulator::STRESS:
                     stress = lexical_cast<double>(token);
                     if(stress < survivor::MIN_STRESS ||
                         stress > survivor::MAX_STRESS)
@@ -265,7 +268,7 @@ survivor * parser::parseSurvivor(string line)
                         return NULL;
                     }
                     break;
-                case LUCK:
+                case simulator::LUCK:
                     if(token == "true")
                     {
                         luck = true;

@@ -26,3 +26,8 @@ double trained_survivor::stress() const
     return _stress * 0.9;
 }
 
+const char trained_survivor::identifier() const
+{
+    return IDENTIFIER;
+}
+
