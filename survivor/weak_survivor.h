@@ -10,6 +10,7 @@ class weak_survivor : public survivor
         static const char IDENTIFIER = 'W';
 
         weak_survivor( string, int, int, int , double , double , bool );
+        const char indentifier() const;
 
     private:
         static double const STRESS_FACTOR;

@@ -8,3 +8,8 @@ hospital::hospital(int & pop, int & dist, double & zstr)
     : infested_area(pop, dist, zstr)
 {
 }
+
+const char hospital::identifier()
+{
+    return IDENTIFIER;
+}

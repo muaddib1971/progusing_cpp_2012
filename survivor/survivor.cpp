@@ -51,6 +51,17 @@ int survivor::power() const
     return _wpower;
 }
 
+string survivor::name() const
+{
+    return _name;
+}
+
+
+const bool & survivor::luck()
+{
+    return _luck;
+}
+
 double survivor::gen_luck()
 {
     random::random_device generator;
@@ -94,4 +105,9 @@ double survivor::attack()
     uniform_real_distribution<> dist(MIN_ATTACK, MAX_ATTACK);
     double rnd_el = dist(gen);
     return rnd_el * (power() + ATTACK_BONUS * ability());
+}
+
+const char survivor::identifier() const
+{
+    return IDENTIFIER;
 }

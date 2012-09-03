@@ -18,13 +18,15 @@ class infested_area
     public:
         infested_area();
         infested_area(int&, int&, double&);
-        virtual const int & path_distance() const;
-        virtual const double & zombie_strength() const;
-        //virtual void increment()=0;
+        const int & path_distance() const;
+        const double & zombie_strength() const;
         void path_distance(const int&);
         void zombie_strength(const double &);
         virtual double zombie_attack() const;
         double encounterRate(int&) const;        
+        const int & population() const;
+        virtual const char identifier() = 0;
+        
 
         static const int MAX_PATH_DISTANCE=50;
         static const int MIN_PATH_DISTANCE=10;

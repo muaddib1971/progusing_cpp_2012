@@ -15,7 +15,7 @@ class survivor
         int _stamina;
         double _ability;
         double _stress;
-        double _luck;
+        bool _luck;
 
     private:
         string _name;
@@ -62,6 +62,7 @@ class survivor
         int stepsAdvanced();
         int updatedStamina();
         double attack();
+        const bool & luck() ;
         virtual int stamina() const;
         virtual int location() const;
         virtual double ability() const;
@@ -69,6 +70,8 @@ class survivor
         virtual int power() const;
         virtual int health() const;
         virtual void health(const int&);
+        virtual const char identifier() const;
+        string name() const;
         survivor operator+=(int);
 };
 #endif

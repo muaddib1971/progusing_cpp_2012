@@ -8,5 +8,6 @@ class trained_survivor : public survivor
         double stress() const;
         static const char IDENTIFIER='T';
         trained_survivor( string, int, int , int , double , double , bool); 
+        const char identifier() const;
 };
 #endif

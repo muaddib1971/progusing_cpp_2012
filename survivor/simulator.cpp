@@ -84,13 +84,32 @@ void simulator::run_tests()
     /* ensure that all elements have sane values */
     assert(_area);
     assert(this->_survivors.size() > 0);
+    unsigned survcount = 0;
 
     /* iterate over the vector of survivors. run the test for 
      * each survivor
      */
+
+    cout << "\nInfected area\t\t";
+    switch(_area->identifier())
+    {
+        case PUB:
+            cout << "Pub" << endl;
+            break;
+        case HOSPITAL:
+            cout << "Hospital" << endl;
+    }
+    cout << "Population size\t\t" << _area->population() << endl;
+    cout << "Path distance\t\t" << _area->path_distance() << " kilometers" 
+        << endl;
+    cout << "Zombie strength\t\t" << _area->zombie_strength() 
+        << endl << endl;
+    cout << "Number of survivors:\t" << _survivors.size() << endl;
     for(vector<survivor*>::iterator it = _survivors.begin(); 
         it != _survivors.end(); it++)
     {
+        survcount++;
+        cout << "---SURVIVOR #" << survcount << "---" << endl;
         survivor * surv = *it;
         run_test(_area, surv);
     }
@@ -111,6 +130,33 @@ bool simulator::run_test(const infested_area * area, survivor * surv)
      * deal with the healrate of the hospital class
      */
     int prevsteps=0;
+
+    switch(surv->identifier())
+    {
+        case NORMAL:
+            cout << "Normal ";
+            break;
+        case TRAINED:
+            cout << "Trained ";
+            break;
+        case WEAK:
+            cout << "Weak ";
+            break;
+    }
+    cout << "survivor ID:\t" << surv->name() << endl;
+    cout << "Max. health\t\t" << surv->health() << endl;
+    cout << "Weapon\t\t\t" << surv->power() << endl;
+    cout << "Stamina\t\t\t" << surv->stamina() << endl;
+    cout << "Ability\t\t\t" << surv->ability() << endl;
+    cout << "Behaviour under stress\t" << surv->stress() << endl;
+    if(surv->luck())
+    {
+        cout << "Luck factor enabled" << endl;
+    }
+    else
+    {
+        cout << "Luck factor disabled" << endl;
+    }
 
     /* while we are still inside the infested area */
     while(surv->location() < area->path_distance())

@@ -29,3 +29,8 @@ double weak_survivor::stress() const
     return _stress / STRESS_FACTOR;
 }
 
+
+const char weak_survivor::indentifier() const
+{
+    return IDENTIFIER;
+}

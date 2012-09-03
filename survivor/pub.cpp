@@ -28,3 +28,8 @@ double pub::zombie_attack() const
     return rnd_el * str;
 }
 
+const char pub::identifier()
+{
+    return IDENTIFIER;
+}
+
