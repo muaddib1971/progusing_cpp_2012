@@ -5,9 +5,14 @@
 #include <boost/random/discrete_distribution.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_real_distribution.hpp>
+#include "validator.h"
+
 using namespace boost;
 using namespace boost::random;
-class infested_area
+/**
+ * represents an infested area within the system
+ **/
+class infested_area : public validator
 {
         int _popsize;
         int _pathdistance;
@@ -25,13 +30,18 @@ class infested_area
         virtual double zombie_attack() const;
         double encounterRate(int&) const;        
         const int & population() const;
-        virtual const char identifier() = 0;
+        virtual const char identifier() const = 0;
+        bool validate() const;
         
 
+        /* the constants that represent limits imposed on an infested
+         * area
+         */
         static const int MAX_PATH_DISTANCE=50;
         static const int MIN_PATH_DISTANCE=10;
         static const int MAX_ZOMBIE_STR=11;
         static const int MIN_ZOMBIE_STR=5;
+        static const int MIN_POPULATION=1;
         static const int MAX_POPULATION=500;
         static const double MIN_ATTACK;
         static const double MAX_ATTACK;

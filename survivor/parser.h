@@ -17,6 +17,10 @@
 using namespace std;
 using namespace boost;
 class simulator; 
+
+/**
+ * the class that does the parsing of the file passed to the simulator
+ **/
 class parser
 {
     public: 
@@ -24,10 +28,6 @@ class parser
         survivor * parseSurvivor(string line);
         bool parseFile(string , simulator & );
 
-
         static const string TOKENS;
-
-
-
 };
 #endif

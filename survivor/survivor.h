@@ -2,6 +2,7 @@
 #include <boost/random/discrete_distribution.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_real_distribution.hpp>
+#include "validator.h"
 
 #ifndef SURVIVOR_H
 #define SURVIVOR_H
@@ -9,7 +10,11 @@
 using namespace std;
 using namespace boost;
 using namespace boost::random;
-class survivor
+
+/**
+ * class that represents a survivor in the system
+ **/
+class survivor : public validator
 { 
     protected:
         int _stamina;
@@ -27,6 +32,16 @@ class survivor
 
 
     public:
+        //struct that simplifies the returning of the mean and 
+        //standard deviation in one unit
+        struct result
+        {
+            double mean;
+            double stddev;
+        };
+
+        //constants required by the survivor limit the range of values
+        //that can be passed in.
         static const double ALPHA;
         static const double BETA;
         static const double GAMMA;
@@ -44,6 +59,7 @@ class survivor
         static const int MAX_POWER=10;
         static const int MIN_STEPS=0;
         static const int MAX_STEPS=2;
+        static const unsigned NUM_REPEATS=10;
         static const double MIN_ABILITY;
         static const double MAX_ABILITY;
         static const double MIN_STRESS;
@@ -58,7 +74,8 @@ class survivor
 
         survivor(string, int , int , int, double , double , bool);
 
-        double gen_luck();
+        double gen_luck() const;
+        result * calc_survival() const;
         int stepsAdvanced();
         int updatedStamina();
         double attack();
@@ -71,7 +88,9 @@ class survivor
         virtual int health() const;
         virtual void health(const int&);
         virtual const char identifier() const;
+        result * calc_mean(vector<double>) const;
         string name() const;
         survivor operator+=(int);
+        bool validate() const;
 };
 #endif

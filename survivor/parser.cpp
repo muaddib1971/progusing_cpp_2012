@@ -43,7 +43,7 @@ bool parser::parseFile(string filename, simulator & sim)
             return false;
         }
 
-        /* get the infested area type */
+        /* get the infested area  */
 
         in.getline(c_line, BUFSIZ);
         line = c_line;
@@ -106,6 +106,14 @@ bool parser::parseFile(string filename, simulator & sim)
         return false;
     }
     in.close();
+    /* verify that the number of survivors specified was correct */
+    if(survivors.size() != num_survivors)
+    {
+        cerr << "Error: there was a mismatch between the number of "
+            << "survivors specified and the actual total." << 
+            endl;
+        return false;
+    }
     /* return the data to the simulator class */
     sim.survivors(survivors);
     sim.area(area);
@@ -135,6 +143,7 @@ infested_area * parser::parseArea(string line)
         string item = tok.next_token();
         try
         {
+            /* convert each token and store it in a variable for later */
             switch(tok_count)
             {
                 case simulator::AREA_TYPE:
@@ -167,8 +176,8 @@ infested_area * parser::parseArea(string line)
             cerr << "Error: the population data is invalid." << endl;
             return NULL;
         }
-       
     }
+    /* create the infested area */
     if(aType == simulator::PUB)
     {
         area = new pub(popsize, distance, strength);
@@ -177,9 +186,20 @@ infested_area * parser::parseArea(string line)
     {
         area = new hospital(popsize, distance, strength);
     }
+    /* validate that everything went ok */
+    if(!area->validate())
+    {
+        cerr << "Error: the data for the area was not within range." 
+            << endl;
+        return NULL;
+    }
     return area;
 }
 
+/**
+ * parse the string for each survivor, convert the values and validate.
+ * If the survivor data is not valid, return NULL
+ **/
 survivor * parser::parseSurvivor(string line)
 {
     tokenizer tok(line, TOKENS);
@@ -192,11 +212,15 @@ survivor * parser::parseSurvivor(string line)
     string token;
     survivor * surv = NULL;
 
+    /* if we get to this point and there are no tokens something bad
+     * has happened
+     */
     if(!tok.has_next())
     {
         cerr << "There is an error in the line: " << line << endl;
         return false;
     }
+    /* iterate over the tokens */
     while(tok.has_next())
     {
         tok_count++;
@@ -205,6 +229,10 @@ survivor * parser::parseSurvivor(string line)
         {
             switch(tok_count)
             {
+                /* process each token, converting it and storing it.
+                 * If the data is non-numeric, it will be handled by the
+                 * lexical_bad_cast exception.
+                 */
                 case simulator::SURVIVOR_TYPE:
                     sType=(enum simulator::survivor_type)token[0];
                     if(sType != simulator::NORMAL 
@@ -220,53 +248,18 @@ survivor * parser::parseSurvivor(string line)
                     break;
                 case simulator::HEALTH:
                     health = lexical_cast<int>(token);
-                    if(health < survivor::MIN_HEALTH || 
-                        health > survivor::MAX_HEALTH)
-                    {
-                        cerr << "Error: health is out of range: " << line
-                            << endl;
-                        return NULL;
-                    }
                     break;
                 case simulator::POWER:
                     power = lexical_cast<int>(token);
-                    if(power < survivor::MIN_POWER ||
-                        power > survivor::MAX_POWER)
-                    {
-                        cerr << "Error: power is out of range: " << line
-                            << endl;
-                            return NULL;
-                    }
                     break;
                 case simulator::STAMINA:
                     stamina = lexical_cast<double>(token);
-                    if(stamina < survivor::MIN_STAMINA || 
-                        stamina > survivor::MAX_STAMINA)
-                    {
-                        cerr << "Error: stamina is out of range: " << line
-                            << endl;
-                        return NULL;
-                    }
                     break;
                 case simulator::ABILITY:
                     ability = lexical_cast<double>(token);
-                    if(ability < survivor::MIN_ABILITY ||
-                        ability > survivor::MAX_ABILITY)
-                    {
-                        cerr << "Error: ability is out of range: " << line
-                            << endl;
-                        return NULL;
-                    }
                     break;
                 case simulator::STRESS:
                     stress = lexical_cast<double>(token);
-                    if(stress < survivor::MIN_STRESS ||
-                        stress > survivor::MAX_STRESS)
-                    {
-                        cerr << "Error: stress is out of range: " << line
-                            << endl;
-                        return NULL;
-                    }
                     break;
                 case simulator::LUCK:
                     if(token == "true")
@@ -296,6 +289,7 @@ survivor * parser::parseSurvivor(string line)
             return NULL;
         }
     }
+    /* create a survivor based on the type of survivor specified */
     switch (sType)
     {
         case trained_survivor::IDENTIFIER:
@@ -315,5 +309,13 @@ survivor * parser::parseSurvivor(string line)
                 " is not a valid survivor type." << endl;
             return NULL;
     }
-   return surv;
+    /* validate the range of data used to create the survivor */
+    if(!surv->validate())
+    {
+        cerr << "Error: there was a problem with the data for the " 
+            << "survivor: " << line << endl;
+        delete surv;
+        return NULL;
+    }
+    return surv;
 }

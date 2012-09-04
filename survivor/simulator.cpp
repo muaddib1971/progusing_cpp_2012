@@ -86,10 +86,9 @@ void simulator::run_tests()
     assert(this->_survivors.size() > 0);
     unsigned survcount = 0;
 
-    /* iterate over the vector of survivors. run the test for 
-     * each survivor
-     */
-
+    //set the floating point precision for output
+    cout.precision(4);
+    cout << fixed;
     cout << "\nInfected area\t\t";
     switch(_area->identifier())
     {
@@ -99,12 +98,18 @@ void simulator::run_tests()
         case HOSPITAL:
             cout << "Hospital" << endl;
     }
+
+    /* output data on the area */
     cout << "Population size\t\t" << _area->population() << endl;
     cout << "Path distance\t\t" << _area->path_distance() << " kilometers" 
         << endl;
     cout << "Zombie strength\t\t" << _area->zombie_strength() 
         << endl << endl;
     cout << "Number of survivors:\t" << _survivors.size() << endl;
+    
+    /* iterate over the vector of survivors. run the test for 
+     * each survivor
+     */
     for(vector<survivor*>::iterator it = _survivors.begin(); 
         it != _survivors.end(); it++)
     {
@@ -131,6 +136,7 @@ bool simulator::run_test(const infested_area * area, survivor * surv)
      */
     int prevsteps=0;
 
+    /* output information on the survivor before we run the simulation */
     switch(surv->identifier())
     {
         case NORMAL:
@@ -157,7 +163,21 @@ bool simulator::run_test(const infested_area * area, survivor * surv)
     {
         cout << "Luck factor disabled" << endl;
     }
+    cout << endl;
 
+    /* output the survival rate from the first assignment */
+    cout << "The survival rate of " << surv->name() << " is ";
+    survivor::result * result = surv->calc_survival();
+    if(result->stddev)
+    {
+        cout << result->mean  * PERCENT << "% (+/- " 
+            << result->stddev * PERCENT << "% )" << endl;
+    }
+    else
+    {
+        cout << result->mean * PERCENT << "%" << endl;
+    }
+    delete result;
     /* while we are still inside the infested area */
     while(surv->location() < area->path_distance())
     {
@@ -211,11 +231,18 @@ bool simulator::run_test(const infested_area * area, survivor * surv)
            /* we need to handle the death */
            if(surv->health() < 0)
            {
-               cout << "You died and suck." << endl;
+               cout << "After traversing " << surv->location() <<
+                    " kilometres on the ";
+               cout << (area->identifier() == PUB ? "Pub" : "Hospital");
+               cout << ", " << surv->name() << " became a zombie!" << 
+                    endl;
                return false;
            }
        }
     }
     /* they got through */
+    cout << "After traversing " << area->path_distance() << " kilometres " 
+        << surv->name() << " got out safely from the " << 
+        (area->identifier() == PUB ? "Pub" : "Hospital" ) << "!" << endl;
     return true;
 }

@@ -1,6 +1,9 @@
 #include "survivor.h"
 #ifndef WEAK_SURVIVOR_H
 #define WEAK_SURVIVOR_H
+/**
+ * represents a weak survivor within the system
+ **/
 class weak_survivor : public survivor
 {
     public:

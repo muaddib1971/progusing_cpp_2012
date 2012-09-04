@@ -9,7 +9,10 @@ hospital::hospital(int & pop, int & dist, double & zstr)
 {
 }
 
-const char hospital::identifier()
+/**
+ * return a char that identifies this object as a hospital
+ **/
+const char hospital::identifier() const
 {
     return IDENTIFIER;
 }
