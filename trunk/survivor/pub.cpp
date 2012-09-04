@@ -28,7 +28,10 @@ double pub::zombie_attack() const
     return rnd_el * str;
 }
 
-const char pub::identifier()
+/**
+ * return a char that identifies this object as a pub to the system.
+ **/
+const char pub::identifier() const
 {
     return IDENTIFIER;
 }

@@ -26,6 +26,27 @@ infested_area::infested_area(int & popsize, int & pathdist,
 }
 
 /**
+ * ensures that all class values are within the allowed range
+ **/
+bool infested_area::validate() const
+{
+    if(_popsize < MIN_POPULATION || _popsize > MAX_POPULATION)
+    {
+        return false;
+    }
+    if(_pathdistance < MIN_PATH_DISTANCE || 
+        _pathdistance > MAX_PATH_DISTANCE)
+    {
+        return false;
+    }
+    if(_zombstr < MIN_ZOMBIE_STR || _zombstr > MAX_ZOMBIE_STR)
+    {
+        return false;
+    }
+    return true;
+}
+
+/**
  * defines the power of a zombie attack.
  **/
 double infested_area::zombie_attack() const

@@ -26,6 +26,10 @@ double trained_survivor::stress() const
     return _stress * 0.9;
 }
 
+/**
+ * return a char that will identify this object as a trained survivor to
+ * the system.
+ **/
 const char trained_survivor::identifier() const
 {
     return IDENTIFIER;

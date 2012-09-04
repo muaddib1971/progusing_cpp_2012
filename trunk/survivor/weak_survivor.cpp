@@ -29,7 +29,10 @@ double weak_survivor::stress() const
     return _stress / STRESS_FACTOR;
 }
 
-
+/**
+ * return a char that will identify this object as a weak survivor to the
+ * system.
+ **/
 const char weak_survivor::indentifier() const
 {
     return IDENTIFIER;

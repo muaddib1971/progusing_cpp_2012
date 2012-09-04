@@ -1,6 +1,10 @@
 #ifndef TRAINED_SURVIVOR_H
 #define TRAINED_SURVIVOR_H
 #include "survivor.h"
+
+/**
+ * represents a trained survivor within the system
+ **/
 class trained_survivor : public survivor
 {
     public:
