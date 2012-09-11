@@ -1,6 +1,7 @@
 #include "simulator.h"
 //static constants required for this class
 const double simulator::MIN_ATTACK_RATE = 0.5;
+const string simulator::OUTPUT="output.txt";
 
 int main(int argc, char** argv)
 {
@@ -32,6 +33,12 @@ int main(int argc, char** argv)
  **/
 simulator::simulator() : _survivors(vector<survivor*>()), _area(NULL)
 {
+    /*make a backup of cout's current output buffer */
+    backup = cout.rdbuf();
+    /* open file and redirect cout to this file */
+    output.open(OUTPUT.c_str());
+    outbuff=output.rdbuf();
+    cout.rdbuf(outbuff);
 }
 
 /**
@@ -48,6 +55,8 @@ simulator::~simulator()
     }
     /* free memory for the area associated with this class */
     delete _area;
+    output.close();
+    cout.rdbuf(backup);
 }
 
 /**
