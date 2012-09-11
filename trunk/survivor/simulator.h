@@ -23,6 +23,9 @@ class simulator
 {
         vector<survivor*>_survivors;
         infested_area * _area;
+        streambuf *outbuff, *backup;
+        ofstream output;
+        static const string OUTPUT;
 
     public:
         static const int NUM_ARGS=3;
