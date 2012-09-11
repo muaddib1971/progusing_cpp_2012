@@ -218,6 +218,9 @@ bool simulator::run_test(const infested_area * area, survivor * surv)
        {
            /* retrieve the attack values for the survivor and the zombie */
            double zombattack, survattack;
+           //reset steps in an area for when travelling through a 
+           //hospital
+           prevsteps=0;
            zombattack = area->zombie_attack();
            survattack = surv->attack();
            /* only if the zombie's attack rate is higher than the survivor
