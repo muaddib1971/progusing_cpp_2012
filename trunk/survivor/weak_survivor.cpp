@@ -1,3 +1,7 @@
+/**************************************************************************
+ * COSC 1252/1254 - Programming Using C++ - Assignment 2 Sample Solution.
+ * Developed by Paul Miller in collaboration with Daniel Macias
+ **************************************************************************/
 #include "weak_survivor.h"
 // define non-integral constants required by this class
 const double weak_survivor::STRESS_FACTOR = 4.0;

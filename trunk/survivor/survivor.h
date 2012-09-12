@@ -1,3 +1,7 @@
+/**************************************************************************
+ * COSC 1252/1254 - Programming Using C++ - Assignment 2 Sample Solution.
+ * Developed by Paul Miller in collaboration with Daniel Macias
+ **************************************************************************/
 #include <boost/random/random_device.hpp>
 #include <boost/random/discrete_distribution.hpp>
 #include <boost/random/mersenne_twister.hpp>

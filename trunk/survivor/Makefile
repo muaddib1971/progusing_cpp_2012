@@ -1,3 +1,8 @@
+##############################################################################
+# COSC 1252/1254 - Programming Using C++ - Assignment 2 Sample Solution.     #
+# Developed by Paul Miller in collaboration with Daniel Macias               #
+##############################################################################
+
 LFLAGS=-lboost_system -lboost_random 
 STDFLAGS=-ansi -pedantic -Wall -gstabs
 CFLAGS=$(STDFLAGS)

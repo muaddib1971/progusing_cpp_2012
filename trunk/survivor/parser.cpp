@@ -1,4 +1,8 @@
-#include "parser.h"
+/**************************************************************************
+ * COSC 1252/1254- Programming Using C++ - Assignment 2 Sample Solution.
+ * Developed by Paul Miller in collaboration with Daniel Macias
+ **************************************************************************/
+ #include "parser.h"
 /* the characters that we will tokenize each line on */
 const string parser::TOKENS=" ";
 
