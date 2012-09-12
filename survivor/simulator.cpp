@@ -1,3 +1,7 @@
+/**************************************************************************
+ * COSC 1252/1254 - Programming Using C++ - Assignment 2 Sample Solution.
+ * Developed by Paul Miller in collaboration with Daniel Macias
+ **************************************************************************/
 #include "simulator.h"
 //static constants required for this class
 const double simulator::MIN_ATTACK_RATE = 0.5;

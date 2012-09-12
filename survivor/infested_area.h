@@ -1,3 +1,7 @@
+/**************************************************************************
+ * COSC 1252/1254 - Programming Using C++ - Assignment 2 Sample Solution.
+ * Developed by Paul Miller in collaboration with Daniel Macias
+ **************************************************************************/
 #ifndef INFESTED_AREA_H
 #define INFESTED_AREA_H
 
