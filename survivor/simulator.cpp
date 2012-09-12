@@ -7,6 +7,14 @@
 const double simulator::MIN_ATTACK_RATE = 0.5;
 const string simulator::OUTPUT="output.txt";
 
+/* constants required for calc_survival()*/
+const double simulator::ALPHA=7/2000.0;
+const double simulator::BETA=1/5.0;
+const double simulator::GAMMA=0.2;
+const double simulator::PHI=0.25;
+const double simulator::LOCFAC=2500.0;
+const double simulator::STRESSFAC=4.0;
+
 int main(int argc, char** argv)
 {
     if(argc != simulator::NUM_ARGS)
@@ -180,7 +188,7 @@ bool simulator::run_test(const infested_area * area, survivor * surv)
 
     /* output the survival rate from the first assignment */
     cout << "The survival rate of " << surv->name() << " is ";
-    survivor::result * result = surv->calc_survival();
+    simulator::result * result = calc_survival(_area->population(), surv);
     if(result->stddev)
     {
         cout << result->mean  * PERCENT << "% (+/- " 
@@ -261,4 +269,97 @@ bool simulator::run_test(const infested_area * area, survivor * surv)
         << surv->name() << " got out safely from the " << 
         (area->identifier() == PUB ? "Pub" : "Hospital" ) << "!" << endl;
     return true;
+}
+
+/**
+ * calculate the chances of survival dependent on whether this survivor
+ * has luck enabled or not. 
+ **/
+simulator::result * simulator::calc_survival(const int& population_size,
+        const survivor * surv) 
+    const
+{
+    //the collection of results
+    vector<double>results;
+    //the survival probability for the current run.
+    double survival;
+    // the final result - mean and standard deviation
+    result * mean = NULL;
+    survival = (ALPHA * surv->stamina()) + (BETA - population_size/LOCFAC) +
+        (GAMMA * surv->ability()) + (PHI - (surv->stress()/STRESSFAC));
+
+    if(surv->luck())
+    {
+        /* if luck is enabled then we generate luck NUM_REPEATS times.
+         * and store these in a vector. We then calculate mean and standard
+         * deviation for this collection of runs.
+         */
+        for(unsigned count = 0; count < NUM_REPEATS; count++)
+        {
+            double luck = surv->gen_luck();
+            survival += luck;
+            if (survival > 1.0)
+            {
+                survival=1.0;
+            }
+            else if (survival < 0)
+            {
+                survival=0;
+            }
+            results.push_back(survival);
+        }
+        mean = calc_mean(results);
+    }
+    else
+    {
+        if (survival > 1.0)
+        {
+            survival=1.0;
+        }
+        else if (survival<0)
+        {
+            survival=0;
+        }
+        mean = new result();
+        mean->mean = survival;
+        mean->stddev=0;
+    }
+    return mean;
+}
+
+/**
+ * calculates mean and standard deviation for a vector of doubles
+ **/
+simulator::result * simulator::calc_mean(vector<double> results) const
+{
+    result * res;
+    double total, mean, devs;
+    /* find the total of all values in the vector */
+    for(vector<double>::iterator it = results.begin(); it < results.end();
+        it++)
+    {
+        total += *it;
+    }
+    mean = total / results.size();
+    /* calculate the deviations - a deviation is the difference between
+     * a value and the mean
+     */
+    vector<double>deviations;
+    for(vector<double>::iterator it = results.begin(); it < results.end();
+        it++)
+    {
+        deviations.push_back(*it - mean);
+    }
+    /* calculate the square of each deviation and add them together */
+    for(vector<double>::iterator it = deviations.begin(); 
+        it < deviations.end(); it++)
+    {
+        double value = *it;
+        devs +=  value * value;
+    }
+    /* store the mean and the standard deviation for return */
+    res = new result();
+    res->mean = mean;
+    res->stddev = sqrt(devs/(deviations.size() - 1));
+    return res;
 }

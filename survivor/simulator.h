@@ -35,6 +35,15 @@ class simulator
         static const int NUM_ARGS=3;
         static const double MIN_ATTACK_RATE;
         static const unsigned PERCENT=100;
+        static const unsigned NUM_REPEATS=10;
+        
+        //struct that simplifies the returning of the mean and 
+        //standard deviation in one unit
+        struct result
+        {
+            double mean;
+            double stddev;
+        };
 
         simulator();
         void run_tests();
@@ -42,6 +51,8 @@ class simulator
         void area(infested_area *);
         bool run_test(const infested_area *, survivor*);
         virtual ~simulator();
+        result * calc_survival(const int&, const survivor *) const;
+        result * calc_mean(vector<double>) const;
 
         /* enumerations that provide constants for the simulator and 
          * other associated classes
@@ -75,5 +86,13 @@ class simulator
             SURVIVOR_TYPE=1, NAME, HEALTH, POWER, STAMINA, ABILITY,
             STRESS, LUCK
         };
+
+        /* constants required for calc_survival() */
+        static const double ALPHA;
+        static const double BETA;
+        static const double GAMMA;
+        static const double PHI;
+        static const double LOCFAC;
+        static const double STRESSFAC;
 };
 #endif
